@@ -1,0 +1,670 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roulette Tracker</title>
+
+<style>
+:root {
+  --bg: #101411;
+  --panel: #191f1b;
+  --panel2: #202923;
+  --border: #303a33;
+  --text: #edf3ee;
+  --muted: #929e95;
+  --green: #4caf70;
+  --red: #e05252;
+  --black: #252a27;
+  --gold: #d9b66c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 24px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+h1 { margin: 0; font-size: 26px; }
+h2 { font-size: 17px; margin: 0 0 18px; }
+
+.subtitle {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 7px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.top-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: var(--panel2);
+  padding: 17px;
+  border-radius: 10px;
+}
+
+.stat-card .label {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.stat-card .value {
+  font-size: 27px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.entry-area {
+  display: flex;
+  gap: 12px;
+  max-width: 440px;
+}
+
+input {
+  min-width: 0;
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: white;
+  font-size: 20px;
+  text-align: center;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-weight: bold;
+  transition: opacity .2s;
+}
+
+button:hover { opacity: .85; }
+
+.add-btn {
+  background: var(--green);
+  color: #07140b;
+  font-size: 15px;
+}
+
+.secondary-btn {
+  background: var(--panel2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.danger-btn {
+  color: var(--red);
+  background: transparent;
+  border: 1px solid var(--red);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.message {
+  color: var(--red);
+  font-size: 13px;
+  margin-top: 10px;
+  min-height: 16px;
+}
+
+.number-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.number-card {
+  min-width: 0;
+  text-align: center;
+  padding: 10px 3px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--black);
+}
+
+.number-card.red { background: #642e32; }
+.number-card.green { background: #23643c; }
+
+.number-card .number {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.number-card .count {
+  font-size: 12px;
+  margin-top: 5px;
+  color: #e2e2e2;
+}
+
+.number-card .percentage {
+  font-size: 10px;
+  margin-top: 3px;
+  color: #d0d0d0;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.category-item { margin-bottom: 16px; }
+
+.category-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  margin-bottom: 7px;
+}
+
+.category-heading span:last-child {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.bar {
+  height: 9px;
+  background: #303831;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width .25s ease;
+}
+
+.red-fill { background: var(--red); }
+.black-fill { background: #a1aaa4; }
+.green-fill { background: var(--green); }
+.gold-fill { background: var(--gold); }
+
+.history {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.history-number {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.history-number.red { background: #8e363c; }
+.history-number.black { background: #303733; }
+.history-number.green { background: #267447; }
+
+.empty {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.section-note {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: -10px;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 700px) {
+  body { padding: 14px; }
+  .top-stats { grid-template-columns: repeat(2, 1fr); }
+  .number-grid { grid-template-columns: repeat(6, 1fr); }
+  .category-grid { grid-template-columns: 1fr; }
+  header { align-items: flex-start; flex-direction: column; }
+}
+
+@media (min-width: 701px) and (max-width: 950px) {
+  .number-grid { grid-template-columns: repeat(9, 1fr); }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+  <div>
+    <h1>Roulette Tracker</h1>
+    <div class="subtitle">European Roulette · 37 Numbers · Live Statistics</div>
+  </div>
+  <div id="sessionStatus" class="subtitle">Session saved locally</div>
+</header>
+<div class="panel">
+  <h2>Recent Results</h2>
+  <div class="section-note">Latest results appear first.</div>
+  <div class="history" id="history"></div>
+</div>
+<div class="top-stats">
+  <div class="stat-card">
+    <div class="label">TOTAL SPINS</div>
+    <div class="value" id="totalSpins">0</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">UNIQUE NUMBERS</div>
+    <div class="value" id="uniqueNumbers">0 / 37</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">MOST FREQUENT</div>
+    <div class="value" id="mostFrequent">—</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">LEAST FREQUENT</div>
+    <div class="value" id="leastFrequent">—</div>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Record Winning Number</h2>
+
+  <div class="entry-area">
+    <input
+      type="number"
+      id="numberInput"
+      min="0"
+      max="36"
+      step="1"
+      placeholder="0–36"
+      autocomplete="off"
+    >
+    <button class="add-btn" id="addButton">ADD</button>
+  </div>
+
+  <div class="message" id="message"></div>
+
+  <div class="controls">
+    <button class="secondary-btn" id="undoButton">Undo Last</button>
+    <button class="danger-btn" id="clearButton">Clear Session</button>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Number Frequency (0–36)</h2>
+  <div class="section-note">Number of appearances and percentage of all recorded spins.</div>
+  <div class="number-grid" id="numberGrid"></div>
+</div>
+
+<div class="category-grid">
+
+  <div class="panel">
+    <h2>Colour Distribution</h2>
+    <div id="colourStats"></div>
+  </div>
+
+  <div class="panel">
+    <h2>High / Low Distribution</h2>
+    <div id="highLowStats"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Dozen Distribution</h2>
+    <div id="dozenStats"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Column Distribution</h2>
+    <div id="columnStats"></div>
+  </div>
+
+</div>
+
+</div>
+
+<script>
+const STORAGE_KEY = "rouletteTracker_v1";
+
+const redNumbers = [
+  1, 3, 5, 7, 9, 12, 14, 16, 18,
+  19, 21, 23, 25, 27, 30, 32, 34, 36
+];
+
+let spins = [];
+
+const numberInput = document.getElementById("numberInput");
+const message = document.getElementById("message");
+
+// Load previously saved results.
+function loadData() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return;
+
+    const parsed = JSON.parse(saved);
+
+    if (
+      Array.isArray(parsed) &&
+      parsed.every(n => Number.isInteger(n) && n >= 0 && n <= 36)
+    ) {
+      spins = parsed;
+    }
+  } catch (error) {
+    console.error("Could not load saved roulette data:", error);
+  }
+}
+
+// Save every change automatically.
+function saveData() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(spins));
+    document.getElementById("sessionStatus").textContent =
+      "Session saved locally";
+  } catch (error) {
+    document.getElementById("sessionStatus").textContent =
+      "Storage error – check browser storage";
+    console.error("Could not save roulette data:", error);
+  }
+}
+
+function getColour(number) {
+  if (number === 0) return "green";
+  return redNumbers.includes(number) ? "red" : "black";
+}
+
+function getCounts() {
+  const counts = Array(37).fill(0);
+
+  spins.forEach(number => counts[number]++);
+
+  return counts;
+}
+
+function percentage(count, total) {
+  return total ? ((count / total) * 100).toFixed(1) + "%" : "0.0%";
+}
+
+function renderNumberGrid(counts) {
+  const total = spins.length;
+
+  document.getElementById("numberGrid").innerHTML =
+    Array.from({ length: 37 }, (_, number) => {
+      const colour = getColour(number);
+
+      return `
+        <div class="number-card ${colour}">
+          <div class="number">${number}</div>
+          <div class="count">${counts[number]} times</div>
+          <div class="percentage">
+            ${percentage(counts[number], total)}
+          </div>
+        </div>
+      `;
+    }).join("");
+}
+
+function renderCategory(elementId, items) {
+  const total = spins.length;
+
+  document.getElementById(elementId).innerHTML =
+    items.map(item => {
+      const percent = total
+        ? (item.count / total) * 100
+        : 0;
+
+      return `
+        <div class="category-item">
+          <div class="category-heading">
+            <span>${item.name}</span>
+            <span>${item.count} (${percentage(item.count, total)})</span>
+          </div>
+          <div class="bar">
+            <div class="bar-fill ${item.colour}"
+                 style="width: ${percent}%"></div>
+          </div>
+        </div>
+      `;
+    }).join("");
+}
+
+function renderSummary(counts) {
+  const total = spins.length;
+  const unique = counts.filter(count => count > 0).length;
+
+  document.getElementById("totalSpins").textContent = total;
+  document.getElementById("uniqueNumbers").textContent = unique + " / 37";
+
+  if (!total) {
+    document.getElementById("mostFrequent").textContent = "—";
+    document.getElementById("leastFrequent").textContent = "—";
+    return;
+  }
+
+  const max = Math.max(...counts);
+  const min = Math.min(...counts);
+
+  const most = counts
+    .map((count, number) => ({ number, count }))
+    .filter(item => item.count === max)
+    .map(item => item.number);
+
+  // Least frequent among numbers that have appeared at least once.
+  const appeared = counts.filter(count => count > 0);
+  const leastCount = Math.min(...appeared);
+
+  const least = counts
+    .map((count, number) => ({ number, count }))
+    .filter(item => item.count === leastCount)
+    .map(item => item.number);
+
+  document.getElementById("mostFrequent").textContent =
+    most.join(", ");
+
+  document.getElementById("leastFrequent").textContent =
+    least.join(", ");
+}
+
+function renderHistory() {
+  const history = document.getElementById("history");
+
+  if (!spins.length) {
+    history.innerHTML = '<div class="empty">No results recorded yet.</div>';
+    return;
+  }
+
+  history.innerHTML = spins
+    .slice(-30)
+    .reverse()
+    .map(number => `
+      <div class="history-number ${getColour(number)}">
+        ${number}
+      </div>
+    `).join("");
+}
+
+function updateStats() {
+  const counts = getCounts();
+  const total = spins.length;
+
+  renderSummary(counts);
+  renderNumberGrid(counts);
+  renderHistory();
+
+  // Colour
+  const colours = [
+    {
+      name: "Red",
+      count: spins.filter(n => getColour(n) === "red").length,
+      colour: "red-fill"
+    },
+    {
+      name: "Black",
+      count: spins.filter(n => getColour(n) === "black").length,
+      colour: "black-fill"
+    },
+    {
+      name: "Green (0)",
+      count: counts[0],
+      colour: "green-fill"
+    }
+  ];
+
+  renderCategory("colourStats", colours);
+
+  // High / Low
+  renderCategory("highLowStats", [
+    {
+      name: "Low (1–18)",
+      count: spins.filter(n => n >= 1 && n <= 18).length,
+      colour: "gold-fill"
+    },
+    {
+      name: "High (19–36)",
+      count: spins.filter(n => n >= 19 && n <= 36).length,
+      colour: "gold-fill"
+    }
+  ]);
+
+  // Dozens
+  renderCategory("dozenStats", [
+    {
+      name: "1st Dozen (1–12)",
+      count: spins.filter(n => n >= 1 && n <= 12).length,
+      colour: "gold-fill"
+    },
+    {
+      name: "2nd Dozen (13–24)",
+      count: spins.filter(n => n >= 13 && n <= 24).length,
+      colour: "gold-fill"
+    },
+    {
+      name: "3rd Dozen (25–36)",
+      count: spins.filter(n => n >= 25 && n <= 36).length,
+      colour: "gold-fill"
+    }
+  ]);
+
+  // Columns
+  renderCategory("columnStats", [
+    {
+      name: "1st Column",
+      count: spins.filter(n => n !== 0 && n % 3 === 1).length,
+      colour: "green-fill"
+    },
+    {
+      name: "2nd Column",
+      count: spins.filter(n => n !== 0 && n % 3 === 2).length,
+      colour: "green-fill"
+    },
+    {
+      name: "3rd Column",
+      count: spins.filter(n => n !== 0 && n % 3 === 0).length,
+      colour: "green-fill"
+    }
+  ]);
+
+  document.getElementById("undoButton").disabled = total === 0;
+}
+
+function addNumber() {
+  const value = numberInput.value.trim();
+  const number = Number(value);
+
+  if (
+    value === "" ||
+    !Number.isInteger(number) ||
+    number < 0 ||
+    number > 36
+  ) {
+    message.textContent = "Enter a valid whole number between 0 and 36.";
+    numberInput.focus();
+    return;
+  }
+
+  spins.push(number);
+
+  saveData();
+  updateStats();
+
+  message.textContent = "";
+  numberInput.value = "";
+  numberInput.focus();
+}
+
+function undoLast() {
+  if (!spins.length) return;
+
+  spins.pop();
+
+  saveData();
+  updateStats();
+  message.textContent = "Last result removed.";
+}
+
+function clearSession() {
+  if (!spins.length) return;
+
+  const confirmed = confirm(
+    "Are you sure you want to delete all recorded roulette results?"
+  );
+
+  if (!confirmed) return;
+
+  spins = [];
+
+  saveData();
+  updateStats();
+
+  message.textContent = "Session cleared.";
+}
+
+// Events
+document.getElementById("addButton").addEventListener("click", addNumber);
+
+numberInput.addEventListener("keydown", event => {
+  if (event.key === "Enter") addNumber();
+});
+
+document.getElementById("undoButton").addEventListener("click", undoLast);
+
+document.getElementById("clearButton").addEventListener("click", clearSession);
+
+// Initialisation
+loadData();
+updateStats();
+</script>
+</body>
+</html>
