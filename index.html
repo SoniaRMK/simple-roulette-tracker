@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roulette Tracker</title>
+<title>Roulette Tracker | SheWolf Tech</title>
 
 <style>
 :root {
@@ -16,11 +16,12 @@
   --muted: #929e95;
   --green: #4caf70;
   --red: #e05252;
-  --black: #252a27;
   --gold: #d9b66c;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -40,11 +41,18 @@ header {
   justify-content: space-between;
   align-items: center;
   gap: 15px;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
-h1 { margin: 0; font-size: 26px; }
-h2 { font-size: 17px; margin: 0 0 18px; }
+h1 {
+  margin: 0;
+  font-size: 26px;
+}
+
+h2 {
+  font-size: 17px;
+  margin: 0 0 18px;
+}
 
 .subtitle {
   color: var(--muted);
@@ -62,7 +70,7 @@ h2 { font-size: 17px; margin: 0 0 18px; }
 
 .top-stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
   margin-bottom: 20px;
 }
@@ -111,7 +119,14 @@ button {
   transition: opacity .2s;
 }
 
-button:hover { opacity: .85; }
+button:hover {
+  opacity: .85;
+}
+
+button:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
 
 .add-btn {
   background: var(--green);
@@ -145,6 +160,42 @@ button:hover { opacity: .85; }
   min-height: 16px;
 }
 
+/* Recent results */
+
+.history {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.history-number {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.history-number.red,
+.mini-number.red {
+  background: #8e363c;
+}
+
+.history-number.black,
+.mini-number.black {
+  background: #303733;
+  border: 1px solid #59615b;
+}
+
+.history-number.green,
+.mini-number.green {
+  background: #267447;
+}
+
+/* Number frequency */
+
 .number-grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -157,11 +208,16 @@ button:hover { opacity: .85; }
   padding: 10px 3px;
   border-radius: 7px;
   border: 1px solid var(--border);
-  background: var(--black);
+  background: #252a27;
 }
 
-.number-card.red { background: #642e32; }
-.number-card.green { background: #23643c; }
+.number-card.red {
+  background: #642e32;
+}
+
+.number-card.green {
+  background: #23643c;
+}
 
 .number-card .number {
   font-weight: bold;
@@ -180,13 +236,43 @@ button:hover { opacity: .85; }
   color: #d0d0d0;
 }
 
+/* Frequency groups */
+
+.number-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  min-height: 30px;
+}
+
+.mini-number {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+}
+
+.number-list .empty {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Category statistics */
+
 .category-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 15px;
 }
 
-.category-item { margin-bottom: 16px; }
+.category-item {
+  margin-bottom: 16px;
+}
 
 .category-heading {
   display: flex;
@@ -214,35 +300,54 @@ button:hover { opacity: .85; }
   transition: width .25s ease;
 }
 
-.red-fill { background: var(--red); }
-.black-fill { background: #a1aaa4; }
-.green-fill { background: var(--green); }
-.gold-fill { background: var(--gold); }
-
-.history {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+.red-fill {
+  background: var(--red);
 }
 
-.history-number {
-  width: 38px;
-  height: 38px;
+.black-fill {
+  background: #a1aaa4;
+}
+
+.green-fill {
+  background: var(--green);
+}
+
+.gold-fill {
+  background: var(--gold);
+}
+
+/* Streak statistics */
+
+.streak-grid {
   display: grid;
-  place-items: center;
-  border-radius: 50%;
-  font-weight: bold;
-  font-size: 13px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
 }
 
-.history-number.red { background: #8e363c; }
-.history-number.black { background: #303733; }
-.history-number.green { background: #267447; }
+.streak-card {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 14px;
+}
 
-.empty {
+.streak-name {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 12px;
+  margin-bottom: 9px;
 }
+
+.streak-value {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.streak-unit {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* General */
 
 .section-note {
   font-size: 12px;
@@ -251,53 +356,133 @@ button:hover { opacity: .85; }
   margin-bottom: 18px;
 }
 
-@media (max-width: 700px) {
-  body { padding: 14px; }
-  .top-stats { grid-template-columns: repeat(2, 1fr); }
-  .number-grid { grid-template-columns: repeat(6, 1fr); }
-  .category-grid { grid-template-columns: 1fr; }
-  header { align-items: flex-start; flex-direction: column; }
+.empty {
+  color: var(--muted);
+  font-size: 13px;
 }
 
-@media (min-width: 701px) and (max-width: 950px) {
-  .number-grid { grid-template-columns: repeat(9, 1fr); }
+@media (max-width: 950px) {
+  .number-grid {
+    grid-template-columns: repeat(9, 1fr);
+  }
+
+  .streak-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    padding: 14px;
+  }
+
+  header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .number-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .streak-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 450px) {
+  .mini-number {
+    width: 29px;
+    height: 29px;
+    font-size: 11px;
+  }
+
+  .number-list {
+    gap: 6px;
+  }
+
+  .history-number {
+    width: 34px;
+    height: 34px;
+  }
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
 <header>
   <div>
     <h1>Roulette Tracker</h1>
-    <div class="subtitle">European Roulette · 37 Numbers · Live Statistics</div>
+    <div class="subtitle">
+      European Roulette · 37 Numbers · Live Statistics
+    </div>
   </div>
-  <div id="sessionStatus" class="subtitle">Session saved locally</div>
+
+  <div id="sessionStatus" class="subtitle">
+    Session saved locally
+  </div>
 </header>
+
+<!-- RECENT RESULTS -->
+
 <div class="panel">
   <h2>Recent Results</h2>
-  <div class="section-note">Latest results appear first.</div>
+  <div class="section-note">
+    Latest results appear first. Showing the last 30 spins.
+  </div>
   <div class="history" id="history"></div>
 </div>
+
+<!-- SUMMARY -->
+
 <div class="top-stats">
+
   <div class="stat-card">
     <div class="label">TOTAL SPINS</div>
     <div class="value" id="totalSpins">0</div>
   </div>
+
   <div class="stat-card">
     <div class="label">UNIQUE NUMBERS</div>
     <div class="value" id="uniqueNumbers">0 / 37</div>
   </div>
-  <div class="stat-card">
-    <div class="label">MOST FREQUENT</div>
-    <div class="value" id="mostFrequent">—</div>
-  </div>
-  <div class="stat-card">
-    <div class="label">LEAST FREQUENT</div>
-    <div class="value" id="leastFrequent">—</div>
-  </div>
+
 </div>
+
+<!-- FREQUENCY GROUPS -->
+
+<div class="panel">
+  <h2>
+    Most Frequent
+    <span class="subtitle">(2+ appearances)</span>
+  </h2>
+  <div class="number-list" id="mostFrequent"></div>
+</div>
+
+<div class="panel">
+  <h2>
+    Least Frequent
+    <span class="subtitle">(1 appearance)</span>
+  </h2>
+  <div class="number-list" id="leastFrequent"></div>
+</div>
+
+<div class="panel">
+  <h2>
+    Not Yet Drawn
+    <span class="subtitle">(0 appearances)</span>
+  </h2>
+  <div class="number-list" id="notDrawn"></div>
+</div>
+
+<!-- RECORD NUMBER -->
 
 <div class="panel">
   <h2>Record Winning Number</h2>
@@ -312,22 +497,38 @@ button:hover { opacity: .85; }
       placeholder="0–36"
       autocomplete="off"
     >
-    <button class="add-btn" id="addButton">ADD</button>
+
+    <button class="add-btn" id="addButton">
+      ADD
+    </button>
   </div>
 
   <div class="message" id="message"></div>
 
   <div class="controls">
-    <button class="secondary-btn" id="undoButton">Undo Last</button>
-    <button class="danger-btn" id="clearButton">Clear Session</button>
+    <button class="secondary-btn" id="undoButton">
+      Undo Last
+    </button>
+
+    <button class="danger-btn" id="clearButton">
+      Clear Session
+    </button>
   </div>
 </div>
 
+<!-- NUMBER FREQUENCY -->
+
 <div class="panel">
   <h2>Number Frequency (0–36)</h2>
-  <div class="section-note">Number of appearances and percentage of all recorded spins.</div>
+
+  <div class="section-note">
+    Number of appearances and percentage of all recorded spins.
+  </div>
+
   <div class="number-grid" id="numberGrid"></div>
 </div>
+
+<!-- CATEGORY STATISTICS -->
 
 <div class="category-grid">
 
@@ -353,9 +554,27 @@ button:hover { opacity: .85; }
 
 </div>
 
+<!-- LONGEST STREAKS -->
+
+<div class="panel">
+  <h2>Longest Outside Bet Streaks</h2>
+
+  <div class="section-note">
+    Longest consecutive winning results and current streaks.
+    Zero breaks all outside-bet streaks.
+  </div>
+
+  <div class="streak-grid" id="streakStats"></div>
+</div>
+
 </div>
 
 <script>
+
+// ======================================
+// CONFIGURATION
+// ======================================
+
 const STORAGE_KEY = "rouletteTracker_v1";
 
 const redNumbers = [
@@ -368,140 +587,367 @@ let spins = [];
 const numberInput = document.getElementById("numberInput");
 const message = document.getElementById("message");
 
-// Load previously saved results.
+
+// ======================================
+// STORAGE
+// ======================================
+
 function loadData() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
+
     if (!saved) return;
 
     const parsed = JSON.parse(saved);
 
     if (
       Array.isArray(parsed) &&
-      parsed.every(n => Number.isInteger(n) && n >= 0 && n <= 36)
+      parsed.every(n =>
+        Number.isInteger(n) && n >= 0 && n <= 36
+      )
     ) {
       spins = parsed;
     }
+
   } catch (error) {
-    console.error("Could not load saved roulette data:", error);
+    console.error("Could not load saved data:", error);
   }
 }
 
-// Save every change automatically.
+
 function saveData() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(spins));
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(spins)
+    );
+
     document.getElementById("sessionStatus").textContent =
       "Session saved locally";
+
   } catch (error) {
     document.getElementById("sessionStatus").textContent =
-      "Storage error – check browser storage";
-    console.error("Could not save roulette data:", error);
+      "Storage error";
+
+    console.error("Could not save data:", error);
   }
 }
+
+
+// ======================================
+// ROULETTE HELPERS
+// ======================================
 
 function getColour(number) {
   if (number === 0) return "green";
-  return redNumbers.includes(number) ? "red" : "black";
+
+  return redNumbers.includes(number)
+    ? "red"
+    : "black";
 }
+
 
 function getCounts() {
   const counts = Array(37).fill(0);
 
-  spins.forEach(number => counts[number]++);
+  spins.forEach(number => {
+    counts[number]++;
+  });
 
   return counts;
 }
 
+
 function percentage(count, total) {
-  return total ? ((count / total) * 100).toFixed(1) + "%" : "0.0%";
+  return total
+    ? ((count / total) * 100).toFixed(1) + "%"
+    : "0.0%";
 }
 
+
+// ======================================
+// FREQUENCY GROUPS
+// ======================================
+
+function displayNumbers(elementId, numbers) {
+  const element = document.getElementById(elementId);
+
+  if (numbers.length === 0) {
+    element.innerHTML =
+      '<span class="empty">No numbers yet.</span>';
+
+    return;
+  }
+
+  element.innerHTML = numbers.map(number => `
+    <div class="mini-number ${getColour(number)}">
+      ${number}
+    </div>
+  `).join("");
+}
+
+
+function renderSummary(counts) {
+
+  const total = spins.length;
+
+  const unique = counts.filter(
+    count => count > 0
+  ).length;
+
+  document.getElementById("totalSpins").textContent =
+    total;
+
+  document.getElementById("uniqueNumbers").textContent =
+    unique + " / 37";
+
+
+  // Most frequent: 2 or more appearances
+
+  const mostFrequent = counts
+    .map((count, number) => ({ number, count }))
+    .filter(item => item.count >= 2)
+    .map(item => item.number);
+
+
+  // Least frequent: exactly 1 appearance
+
+  const leastFrequent = counts
+    .map((count, number) => ({ number, count }))
+    .filter(item => item.count === 1)
+    .map(item => item.number);
+
+
+  // Not yet drawn: zero appearances
+
+  const notDrawn = counts
+    .map((count, number) => ({ number, count }))
+    .filter(item => item.count === 0)
+    .map(item => item.number);
+
+
+  displayNumbers("mostFrequent", mostFrequent);
+  displayNumbers("leastFrequent", leastFrequent);
+  displayNumbers("notDrawn", notDrawn);
+
+}
+
+
+// ======================================
+// NUMBER FREQUENCY GRID
+// ======================================
+
 function renderNumberGrid(counts) {
+
   const total = spins.length;
 
   document.getElementById("numberGrid").innerHTML =
+
     Array.from({ length: 37 }, (_, number) => {
+
       const colour = getColour(number);
 
       return `
         <div class="number-card ${colour}">
-          <div class="number">${number}</div>
-          <div class="count">${counts[number]} times</div>
+
+          <div class="number">
+            ${number}
+          </div>
+
+          <div class="count">
+            ${counts[number]} times
+          </div>
+
           <div class="percentage">
             ${percentage(counts[number], total)}
           </div>
+
         </div>
       `;
+
     }).join("");
+
 }
 
+
+// ======================================
+// CATEGORY STATISTICS
+// ======================================
+
 function renderCategory(elementId, items) {
+
   const total = spins.length;
 
   document.getElementById(elementId).innerHTML =
+
     items.map(item => {
+
       const percent = total
         ? (item.count / total) * 100
         : 0;
 
       return `
         <div class="category-item">
+
           <div class="category-heading">
             <span>${item.name}</span>
-            <span>${item.count} (${percentage(item.count, total)})</span>
+
+            <span>
+              ${item.count} (${percentage(item.count, total)})
+            </span>
           </div>
+
           <div class="bar">
-            <div class="bar-fill ${item.colour}"
-                 style="width: ${percent}%"></div>
+            <div
+              class="bar-fill ${item.colour}"
+              style="width: ${percent}%"
+            ></div>
           </div>
+
         </div>
       `;
+
     }).join("");
+
 }
 
-function renderSummary(counts) {
-  const total = spins.length;
-  const unique = counts.filter(count => count > 0).length;
 
-  document.getElementById("totalSpins").textContent = total;
-  document.getElementById("uniqueNumbers").textContent = unique + " / 37";
+// ======================================
+// OUTSIDE BET STREAKS
+// ======================================
 
-  if (!total) {
-    document.getElementById("mostFrequent").textContent = "—";
-    document.getElementById("leastFrequent").textContent = "—";
-    return;
-  }
+function renderStreaks() {
 
-  const max = Math.max(...counts);
-  const min = Math.min(...counts);
+  const bets = [
 
-  const most = counts
-    .map((count, number) => ({ number, count }))
-    .filter(item => item.count === max)
-    .map(item => item.number);
+    {
+      name: "Red",
+      test: n => getColour(n) === "red"
+    },
 
-  // Least frequent among numbers that have appeared at least once.
-  const appeared = counts.filter(count => count > 0);
-  const leastCount = Math.min(...appeared);
+    {
+      name: "Black",
+      test: n => getColour(n) === "black"
+    },
 
-  const least = counts
-    .map((count, number) => ({ number, count }))
-    .filter(item => item.count === leastCount)
-    .map(item => item.number);
+    {
+      name: "Low",
+      test: n => n >= 1 && n <= 18
+    },
 
-  document.getElementById("mostFrequent").textContent =
-    most.join(", ");
+    {
+      name: "High",
+      test: n => n >= 19 && n <= 36
+    },
 
-  document.getElementById("leastFrequent").textContent =
-    least.join(", ");
+    {
+      name: "1st Dozen",
+      test: n => n >= 1 && n <= 12
+    },
+
+    {
+      name: "2nd Dozen",
+      test: n => n >= 13 && n <= 24
+    },
+
+    {
+      name: "3rd Dozen",
+      test: n => n >= 25 && n <= 36
+    },
+
+    {
+      name: "1st Column",
+      test: n => n !== 0 && n % 3 === 1
+    },
+
+    {
+      name: "2nd Column",
+      test: n => n !== 0 && n % 3 === 2
+    },
+
+    {
+      name: "3rd Column",
+      test: n => n !== 0 && n % 3 === 0
+    }
+
+  ];
+
+
+  const results = bets.map(bet => {
+
+    let currentStreak = 0;
+    let longestStreak = 0;
+
+    spins.forEach(number => {
+
+      if (bet.test(number)) {
+
+        currentStreak++;
+
+        longestStreak = Math.max(
+          longestStreak,
+          currentStreak
+        );
+
+      } else {
+
+        currentStreak = 0;
+
+      }
+
+    });
+
+    return {
+      name: bet.name,
+      longest: longestStreak,
+      current: currentStreak
+    };
+
+  });
+
+
+  document.getElementById("streakStats").innerHTML =
+
+    results.map(bet => `
+
+      <div class="streak-card">
+
+        <div class="streak-name">
+          ${bet.name}
+        </div>
+
+        <div class="streak-value">
+          ${bet.longest}
+        </div>
+
+        <div class="streak-unit">
+          Longest streak
+        </div>
+
+        <div class="streak-unit" style="margin-top:8px">
+          Current: ${bet.current}
+        </div>
+
+      </div>
+
+    `).join("");
+
 }
+
+
+// ======================================
+// RECENT RESULTS
+// ======================================
 
 function renderHistory() {
+
   const history = document.getElementById("history");
 
   if (!spins.length) {
-    history.innerHTML = '<div class="empty">No results recorded yet.</div>';
+
+    history.innerHTML =
+      '<div class="empty">No results recorded yet.</div>';
+
     return;
   }
 
@@ -509,98 +955,166 @@ function renderHistory() {
     .slice(-30)
     .reverse()
     .map(number => `
+
       <div class="history-number ${getColour(number)}">
         ${number}
       </div>
+
     `).join("");
+
 }
 
-function updateStats() {
-  const counts = getCounts();
-  const total = spins.length;
 
-  renderSummary(counts);
-  renderNumberGrid(counts);
+// ======================================
+// UPDATE ALL STATISTICS
+// ======================================
+
+function updateStats() {
+
+  const counts = getCounts();
+
   renderHistory();
 
-  // Colour
-  const colours = [
+  renderSummary(counts);
+
+  renderNumberGrid(counts);
+
+
+  // Colour distribution
+
+  renderCategory("colourStats", [
+
     {
       name: "Red",
-      count: spins.filter(n => getColour(n) === "red").length,
+      count: spins.filter(
+        n => getColour(n) === "red"
+      ).length,
       colour: "red-fill"
     },
+
     {
       name: "Black",
-      count: spins.filter(n => getColour(n) === "black").length,
+      count: spins.filter(
+        n => getColour(n) === "black"
+      ).length,
       colour: "black-fill"
     },
+
     {
       name: "Green (0)",
       count: counts[0],
       colour: "green-fill"
     }
-  ];
 
-  renderCategory("colourStats", colours);
+  ]);
 
-  // High / Low
+
+  // High / Low distribution
+
   renderCategory("highLowStats", [
+
     {
       name: "Low (1–18)",
-      count: spins.filter(n => n >= 1 && n <= 18).length,
+      count: spins.filter(
+        n => n >= 1 && n <= 18
+      ).length,
       colour: "gold-fill"
     },
+
     {
       name: "High (19–36)",
-      count: spins.filter(n => n >= 19 && n <= 36).length,
+      count: spins.filter(
+        n => n >= 19 && n <= 36
+      ).length,
       colour: "gold-fill"
     }
+
   ]);
 
-  // Dozens
+
+  // Dozen distribution
+
   renderCategory("dozenStats", [
+
     {
       name: "1st Dozen (1–12)",
-      count: spins.filter(n => n >= 1 && n <= 12).length,
+      count: spins.filter(
+        n => n >= 1 && n <= 12
+      ).length,
       colour: "gold-fill"
     },
+
     {
       name: "2nd Dozen (13–24)",
-      count: spins.filter(n => n >= 13 && n <= 24).length,
+      count: spins.filter(
+        n => n >= 13 && n <= 24
+      ).length,
       colour: "gold-fill"
     },
+
     {
       name: "3rd Dozen (25–36)",
-      count: spins.filter(n => n >= 25 && n <= 36).length,
+      count: spins.filter(
+        n => n >= 25 && n <= 36
+      ).length,
       colour: "gold-fill"
     }
+
   ]);
 
-  // Columns
+
+  // Column distribution
+
   renderCategory("columnStats", [
+
     {
       name: "1st Column",
-      count: spins.filter(n => n !== 0 && n % 3 === 1).length,
+      count: spins.filter(
+        n => n !== 0 && n % 3 === 1
+      ).length,
       colour: "green-fill"
     },
+
     {
       name: "2nd Column",
-      count: spins.filter(n => n !== 0 && n % 3 === 2).length,
+      count: spins.filter(
+        n => n !== 0 && n % 3 === 2
+      ).length,
       colour: "green-fill"
     },
+
     {
       name: "3rd Column",
-      count: spins.filter(n => n !== 0 && n % 3 === 0).length,
+      count: spins.filter(
+        n => n !== 0 && n % 3 === 0
+      ).length,
       colour: "green-fill"
     }
+
   ]);
 
-  document.getElementById("undoButton").disabled = total === 0;
+
+  // Outside bet streaks
+
+  renderStreaks();
+
+
+  // Undo button state
+
+  document.getElementById("undoButton").disabled =
+    spins.length === 0;
+
 }
 
+
+// ======================================
+// ADD NUMBER
+// ======================================
+
 function addNumber() {
+
   const value = numberInput.value.trim();
+
   const number = Number(value);
 
   if (
@@ -609,32 +1123,59 @@ function addNumber() {
     number < 0 ||
     number > 36
   ) {
-    message.textContent = "Enter a valid whole number between 0 and 36.";
+
+    message.textContent =
+      "Enter a valid whole number between 0 and 36.";
+
     numberInput.focus();
+
     return;
   }
+
 
   spins.push(number);
 
   saveData();
+
   updateStats();
 
   message.textContent = "";
+
   numberInput.value = "";
+
   numberInput.focus();
+
 }
 
+
+// ======================================
+// UNDO LAST RESULT
+// ======================================
+
 function undoLast() {
+
   if (!spins.length) return;
 
   spins.pop();
 
   saveData();
+
   updateStats();
-  message.textContent = "Last result removed.";
+
+  message.textContent =
+    "Last result removed.";
+
+  numberInput.focus();
+
 }
 
+
+// ======================================
+// CLEAR SESSION
+// ======================================
+
 function clearSession() {
+
   if (!spins.length) return;
 
   const confirmed = confirm(
@@ -646,25 +1187,56 @@ function clearSession() {
   spins = [];
 
   saveData();
+
   updateStats();
 
-  message.textContent = "Session cleared.";
+  message.textContent =
+    "Session cleared.";
+
+  numberInput.focus();
+
 }
 
-// Events
-document.getElementById("addButton").addEventListener("click", addNumber);
+
+// ======================================
+// EVENT LISTENERS
+// ======================================
+
+document
+  .getElementById("addButton")
+  .addEventListener("click", addNumber);
+
 
 numberInput.addEventListener("keydown", event => {
-  if (event.key === "Enter") addNumber();
+
+  if (event.key === "Enter") {
+    addNumber();
+  }
+
 });
 
-document.getElementById("undoButton").addEventListener("click", undoLast);
 
-document.getElementById("clearButton").addEventListener("click", clearSession);
+document
+  .getElementById("undoButton")
+  .addEventListener("click", undoLast);
 
-// Initialisation
+
+document
+  .getElementById("clearButton")
+  .addEventListener("click", clearSession);
+
+
+// ======================================
+// INITIALISE APPLICATION
+// ======================================
+
 loadData();
+
 updateStats();
+
+numberInput.focus();
+
 </script>
+
 </body>
 </html>
